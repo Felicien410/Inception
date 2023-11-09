@@ -9,9 +9,9 @@ RUN mkdir -p /run/nginx /etc/nginx/ssl
 
 # Générer un certificat SSL auto-signé pour TLSv1.2 et TLSv1.3
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-    -keyout /etc/nginx/ssl/nginx.key \
-    -out /etc/nginx/ssl/nginx.crt \
-    -subj "/C=FR/ST=Paris/L=Paris/O=Inception/OU=IT Department/CN=localhost"
+    -keyout /etc/nginx/ssl/Inception.key \
+    -out /etc/nginx/ssl/Inception.crt \
+    -subj "/C=FR/ST=Mouvaux/L=Mouvaux/O=42Nice/OU=fcatteau/CN=Inception"
 
 # Ajouter la configuration personnalisée de NGINX
 COPY nginx.conf /etc/nginx/nginx.conf

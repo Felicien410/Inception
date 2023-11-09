@@ -1,0 +1,25 @@
+2023-11-08 16:51:27 0 [Note] Starting MariaDB 10.6.14-MariaDB source revision c93754d45e5d9379e3e23d7ada1d5f21d2711f66 as process 81
+2023-11-08 16:51:27 0 [Note] mariadbd: Aria engine: starting recovery
+recovered pages: 0% 28% 39% 71% 92% 100% (0.0 seconds); tables to flush: 2 1 0
+ (0.0 seconds); 
+2023-11-08 16:51:27 0 [Note] mariadbd: Aria engine: recovery done
+2023-11-08 16:51:27 0 [Note] InnoDB: Compressed tables use zlib 1.2.12
+2023-11-08 16:51:27 0 [Note] InnoDB: Number of pools: 1
+2023-11-08 16:51:27 0 [Note] InnoDB: Using ARMv8 crc32 + pmull instructions
+2023-11-08 16:51:27 0 [Note] mariadbd: O_TMPFILE is not supported on /var/tmp (disabling future attempts)
+2023-11-08 16:51:27 0 [Note] InnoDB: Using Linux native AIO
+2023-11-08 16:51:27 0 [Note] InnoDB: Initializing buffer pool, total size = 134217728, chunk size = 134217728
+2023-11-08 16:51:27 0 [Note] InnoDB: Completed initialization of buffer pool
+2023-11-08 16:51:27 0 [Note] InnoDB: Starting crash recovery from checkpoint LSN=41308,41308
+2023-11-08 16:51:27 0 [Note] InnoDB: Starting final batch to recover 10 pages from redo log.
+2023-11-08 16:51:27 0 [Note] InnoDB: 128 rollback segments are active.
+2023-11-08 16:51:27 0 [Note] InnoDB: Removed temporary tablespace data file: "./ibtmp1"
+2023-11-08 16:51:27 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2023-11-08 16:51:27 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2023-11-08 16:51:27 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+2023-11-08 16:51:27 0 [Note] InnoDB: 10.6.14 started; log sequence number 42602; transaction id 16
+2023-11-08 16:51:27 0 [Note] Plugin 'FEEDBACK' is disabled.
+2023-11-08 16:51:27 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+2023-11-08 16:51:27 0 [Note] InnoDB: Buffer pool(s) load completed at 231108 16:51:27
+2023-11-08 16:51:27 0 [Note] /usr/bin/mariadbd: ready for connections.
+Version: '10.6.14-MariaDB'  socket: '/run/mysqld/mysqld.sock'  port: 0  MariaDB Server

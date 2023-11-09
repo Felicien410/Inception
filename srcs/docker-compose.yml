@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3'
 
 services:
   wordpress:
@@ -37,13 +37,27 @@ services:
     container_name: db
     volumes:
       - db_data:/var/lib/mysql
+    env_file:
+      - .env
     environment:
-      - MYSQL_DATABASE=${DB_NAME}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER:     ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
 
 volumes:
   wordpress_data:
+    driver: local
+    name: wordpress
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/wordpress
   db_data:
+    driver: local
+    name: mariadb
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/mariadb
