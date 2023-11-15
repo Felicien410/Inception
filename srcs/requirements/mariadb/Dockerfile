@@ -3,15 +3,13 @@ FROM alpine:3.16.0
 RUN apk update && \
     apk add --no-cache mariadb mariadb-client
 
-# RUN mkdir -p /var/lib/mysql
+RUN which mysql_upgrade || echo "mysql_upgrade not found"
+# Créer le répertoire pour le socket MySQL et définir les permissions
+RUN mkdir -p /run/mysqld && chown mysql:mysql /run/mysqld
 
-# RUN mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+# Copier le fichier de configuration personnalisé dans le conteneur
+COPY my-custom.cnf /etc/mysql/my.cnf
 
-COPY start.sh /start.sh
+COPY start.sh /tmp/start.sh
 
-RUN chmod +x /start.sh
-
-EXPOSE 3306
-
-CMD ["sh", "/start.sh"]
-
+CMD ["sh", "/tmp/start.sh"]

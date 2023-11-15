@@ -1,5 +1,6 @@
 FROM alpine:3.16.0
 
+# Installer PHP et les extensions nécessaires
 RUN apk add --no-cache \
     php8 \
     php8-fpm \
@@ -19,27 +20,29 @@ RUN apk add --no-cache \
     php8-mbstring \
     php8-gd \
     wget \
-    mariadb-client 
+    mariadb-client
 
-# Ajouter l'utilisateur www-data si nécessaire et l'ajouter au groupe www-data
-RUN adduser -D -H -u 82 -s /sbin/nologin -G www-data www-data || true
+RUN mkdir -p /var/www/html
+RUN adduser -S nginx &&	addgroup -S nginx
 
-WORKDIR /var/www/html
+# Télécharger WordPress et le déplacer dans le répertoire de travail
+RUN wget https://wordpress.org/latest.tar.gz && \
+    tar -xzf latest.tar.gz -C /var/www/ && \
+    rm latest.tar.gz && \
+    mv /var/www/wordpress/* /var/www/html/ && \
+    rmdir /var/www/wordpress && \
+    chown -R nobody:nobody /var/www/html
 
-RUN wget https://wordpress.org/latest.tar.gz \
-    && tar -xzf latest.tar.gz \
-    && rm latest.tar.gz \
-    && chown -R www-data:www-data /var/www/html
+# Copier le script de configuration
+COPY configure.sh /configure.sh
+COPY wp-config.php /var/www/html/wp-config.php
+RUN chmod +x /configure.sh
 
-COPY ./conf/www.conf /etc/php8/php-fpm.d/www.conf
-
-COPY ./wp-config.php /var/www/html/wordpress
-
+# Exposer le port sur lequel PHP-FPM écoute
 EXPOSE 9000
 
-RUN chmod -R 755 /var/www/html/wordpress
+# Utiliser le répertoire /var/www/html comme répertoire de travail
+WORKDIR /var/www/html
 
-CMD ["php-fpm8", "-F"]
-
-
-
+# Démarrer PHP-FPM
+CMD ["sh", "/configure.sh"]
