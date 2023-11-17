@@ -9,29 +9,44 @@ services:
       - "8000:80" 
     volumes:
       - wordpress_data:/var/www/html
-    environment:
-      - WORDPRESS_DB_HOST=db
-    depends_on:
-      - db
+      - db_data:/var/lib/mysql
     networks:
       - my_network
-
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
+    depends_on:
+      - db
+    env_file:
+      - .env
+      
   nginx:
-    build: ./requirements/nginx
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
     container_name: nginx
+    volumes:
+      - wordpress_data:/var/www/html
     ports:
       - "80:80"
       - "443:443"
     depends_on:
       - wordpress
+    restart: on-failure
     networks:
       - my_network
-
+    
   db:
-    build: ./requirements/mariadb
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
     container_name: db
     volumes:
       - db_data:/var/lib/mysql
+    env_file:
+      - .env
     environment:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER:     ${DB_USER}
@@ -43,7 +58,18 @@ services:
 
 volumes:
   wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/feliciencatteau/data/wordpress
   db_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/feliciencatteau/data/mariadb
 
 networks:
   my_network:
+    driver: bridge

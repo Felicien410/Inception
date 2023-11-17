@@ -57,6 +57,7 @@ clean:
 
 fclean:
 	@echo "$(RED)█████████████████████ Removing Everything ██████████████████████$(RESET)"
+	@docker-compose -f srcs/docker-compose.yml down || echo "Docker Compose n'a pas pu arrêter les conteneurs. Peut-être n'existent-ils pas ou sont-ils déjà arrêtés."
 	@docker system prune -a --volumes
 
 re: fclean all

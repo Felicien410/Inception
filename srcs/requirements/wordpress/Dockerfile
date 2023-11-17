@@ -1,48 +1,86 @@
-FROM alpine:3.16.0
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Dockerfile                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: shovsepy <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/06/06 16:43:01 by shovsepy          #+#    #+#              #
+#    Updated: 2022/06/06 16:43:15 by shovsepy         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-# Installer PHP et les extensions nécessaires
-RUN apk add --no-cache \
-    php8 \
-    php8-fpm \
-    php8-opcache \
-    php8-mysqli \
-    php8-json \
-    php8-openssl \
-    php8-curl \
-    php8-zlib \
-    php8-xml \
-    php8-phar \
-    php8-intl \
-    php8-dom \
-    php8-xmlreader \
-    php8-ctype \
-    php8-session \
-    php8-mbstring \
-    php8-gd \
-    wget \
-    mariadb-client
+FROM alpine:3.13
 
-RUN mkdir -p /var/www/html
+LABEL "author"="shovsepy"
+
+RUN apk update && apk upgrade && apk add \
+	wget		\
+        tar		\
+	mariadb-client	\
+	php7		\
+	php7-fpm	\
+	php7-bcmath	\
+	php7-bz2 	\
+	php7-calendar	\
+	php7-ctype	\
+	php7-curl	\
+	php7-dom	\
+	php7-exif	\
+	php7-fileinfo	\
+	php7-gd		\
+	php7-gmagick	\
+	php7-gmp	\
+	php7-iconv	\
+	php7-imap	\
+	php7-intl	\
+	php7-json	\
+	php7-mbstring	\
+	php7-mcrypt	\
+	php7-memcache	\
+	php7-mysqli	\
+	php7-mysqlnd	\
+	php7-openssl	\
+	php7-pcntl	\
+	php7-pdo	\
+	php7-pdo_mysql	\
+	php7-pdo_pgsql	\
+	php7-pdo_sqlite \
+	php7-pgsql	\
+	php7-phar	\
+	php7-posix	\
+	php7-session	\
+	php7-shmop	\
+	php7-simplexml	\
+	php7-soap	\
+	php7-sockets	\
+	php7-sodium	\
+	php7-sqlite3	\
+	php7-sysvsem	\
+	php7-sysvshm	\
+	php7-tokenizer	\
+	php7-xml	\
+	php7-xmlreader	\
+	php7-xmlwriter	\
+	php7-xsl	\
+	php7-zip	\
+	php7-zlib					
+		
+
+# php config
 RUN adduser -S nginx &&	addgroup -S nginx
+COPY conf/php-fpm.conf /etc/php7/php-fpm.conf
+COPY conf/www.conf /etc/php7/php-fpm.d/www.conf
 
-# Télécharger WordPress et le déplacer dans le répertoire de travail
-RUN wget https://wordpress.org/latest.tar.gz && \
-    tar -xzf latest.tar.gz -C /var/www/ && \
-    rm latest.tar.gz && \
-    mv /var/www/wordpress/* /var/www/html/ && \
-    rmdir /var/www/wordpress && \
-    chown -R nobody:nobody /var/www/html
+# Static website
+COPY conf/index.html /tmp/index.html
 
-# Copier le script de configuration
-COPY configure.sh /configure.sh
-COPY wp-config.php /var/www/html/wp-config.php
-RUN chmod +x /configure.sh
+# install wordpress
+RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+RUN cp wp-cli.phar /usr/bin/wp
 
-# Exposer le port sur lequel PHP-FPM écoute
-EXPOSE 9000
+WORKDIR /var/www/html/wordpress
 
-# Utiliser le répertoire /var/www/html comme répertoire de travail
-WORKDIR /var/www/html
-
-# Démarrer PHP-FPM
-CMD ["sh", "/configure.sh"]
+COPY tools/configure.sh /tmp/configure.sh
+ENTRYPOINT [ "sh", "/tmp/configure.sh" ]

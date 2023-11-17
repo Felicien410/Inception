@@ -6,7 +6,7 @@
 #    By: feliciencatteau <feliciencatteau@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 16:41:34 by shovsepy          #+#    #+#              #
-#    Updated: 2023/11/13 20:39:14 by feliciencat      ###   ########.fr        #
+#    Updated: 2023/11/15 08:55:14 by feliciencat      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,9 @@ mysqld_safe --datadir='/var/lib/mysql' &
 # Augmenter le délai d'attente
 sleep 20
 
+echo "DB_NAME: ${DB_NAME}"
+echo "DB_USER: ${DB_USER}"
+echo "DB_PASSWORD: ${DB_PASSWORD}"
 
 mysql -u root -e "DELETE FROM	mysql.user WHERE User='';"
 mysql -u root -e "DROP DATABASE IF EXISTS test;"
