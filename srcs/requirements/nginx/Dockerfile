@@ -12,7 +12,7 @@ RUN mkdir -p /run/nginx /etc/nginx/ssl
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout /etc/nginx/ssl/nginx.key \
     -out /etc/nginx/ssl/nginx.crt \
-    -subj "/C=FR/ST=Mouvaux/L=Mouvaux/O=42Nice/OU=Project/CN=localhost"
+    -subj "/C=FR/ST=Nord/L=Mouvaux/O=42/OU=fcatteau/CN=localhost"
 
 # Ajouter la configuration personnalisée de NGINX
 COPY nginx.conf /etc/nginx/nginx.conf
