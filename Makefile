@@ -66,4 +66,4 @@ re: fclean all
 
 sql-shell:
 	@echo "Accès au shell MySQL..."
-	docker-compose -f $(COMPOSE_FILE) exec db mysql -u root
+	docker-compose -f $(COMPOSE_FILE) exec mariadb mysql -u root
