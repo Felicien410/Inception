@@ -13,12 +13,12 @@ services:
     networks:
       - my_network
     environment:
-      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_HOST=mariadb
       - WORDPRESS_DB_USER=wordpress
       - WORDPRESS_DB_PASSWORD=wordpress
       - WORDPRESS_DB_NAME=wordpress
     depends_on:
-      - db
+      - mariadb
     env_file:
       - .env
       
@@ -38,11 +38,11 @@ services:
     networks:
       - my_network
     
-  db:
+  mariadb:
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
-    container_name: db
+    container_name: mariadb
     volumes:
       - db_data:/var/lib/mysql
     env_file:

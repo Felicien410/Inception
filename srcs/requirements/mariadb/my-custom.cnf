@@ -1,26 +1,7 @@
 [mysqld]
-socket=/run/mysqld/mysqld.sock
-innodb_buffer_pool_size=128M
-innodb_log_file_size=32M
-innodb_file_per_table=1
-log_error=/var/lib/mysql/mysql_error.log
-
-# Autoriser le serveur à accepter des connexions sur toutes les interfaces
-bind-address=0.0.0.0
-
-# Utiliser InnoDB comme moteur de stockage par défaut
-default_storage_engine=InnoDB
-
-# Paramètres pour mysqldump
-[mysqldump]
-quick
-quote-names
-max_allowed_packet  = 16M
-
-# Paramètres pour les clients MySQL
-[mysql]
-# ...
-
-# Paramètres pour isamchk
-[isamchk]
-key_buffer_size = 16M
+user = root
+port = 3306
+datadir = /var/lib/mysql
+socket = /var/run/mysqld/mysqld.sock
+skip-networking = false
+bind-address = 0.0.0.0
