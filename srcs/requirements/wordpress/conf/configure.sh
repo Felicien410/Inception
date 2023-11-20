@@ -30,5 +30,4 @@ cp					./wp-config.php /var/www/html/wp-config.php
 					--role=author \
 					--user_pass=${WORDPRESS_PASSWORD}
 
-echo "Wordpress started on port 9000"
 exec	php-fpm7 -F

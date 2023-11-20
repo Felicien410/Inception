@@ -3,6 +3,7 @@ FROM alpine:3.14.0
 RUN		apk update
 RUN		apk upgrade
 
+#==== PHP_FPM =================================================================#
 RUN		apk add php7 \
 				php7-fpm \
 				php7-opcache \
@@ -37,6 +38,7 @@ RUN		apk add openrc
 RUN		rm -f /etc/php7/php-fpm.d/www.conf
 COPY	conf/default.conf /etc/php7/php-fpm.d/www.conf
 
+#==== WORDPRESS ===============================================================#
 RUN		mkdir 					-p /var/www/html
 RUN		adduser 				-u 82 -D -S -G www-data www-data
 RUN		chmod 777 				-R /var/www/html
@@ -44,9 +46,9 @@ RUN		chown 					-R www-data:www-data /var/www/html
 
 COPY	./conf/wp-config.php	./
 COPY	./conf/configure.sh	./
-COPY conf/index.html /tmp/index.html
 
 RUN		chmod +x 				./configure.sh
-ENTRYPOINT [ "sh", "/tmp/configure.sh" ]
+ENTRYPOINT						["./configure.sh"]
 
+#==============================================================================#
 EXPOSE	9000
