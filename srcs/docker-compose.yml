@@ -4,7 +4,7 @@ services:
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress/
-    restart: always
+    restart: on-failure
     ports:
       - "8000:80" 
     volumes:
@@ -12,15 +12,13 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - my_network
-    environment:
-      - WORDPRESS_DB_HOST=mariadb
-      - WORDPRESS_DB_USER=wordpress
-      - WORDPRESS_DB_PASSWORD=wordpress
-      - WORDPRESS_DB_NAME=wordpress
     depends_on:
       - mariadb
     env_file:
       - .env
+    environment:
+      - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+    
       
   nginx:
     build:
@@ -30,7 +28,6 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     ports:
-      - "80:80"
       - "443:443"
     depends_on:
       - wordpress
@@ -55,6 +52,7 @@ services:
       - "3306:3306"
     networks:
       - my_network
+    restart: on-failure
 
 volumes:
   wordpress_data:
