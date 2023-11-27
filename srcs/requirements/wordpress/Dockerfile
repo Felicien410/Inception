@@ -30,10 +30,6 @@ RUN apk add php81 \
             php81-gd \
             php81-zlib
 
-
-
-
-
 RUN		apk add curl wget
 RUN		apk add openrc
 

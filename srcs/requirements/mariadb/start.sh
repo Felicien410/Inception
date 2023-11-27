@@ -21,6 +21,7 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 	fi
 
 	cat << EOF > $tfile
+	
 USE mysql;
 FLUSH PRIVILEGES;
 

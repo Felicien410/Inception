@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sleep 5
+sleep 10
 
 curl				-O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod				+x wp-cli.phar
@@ -22,8 +22,6 @@ cp					./wp-config.php /var/www/html/wp-config.php
 					--admin_email=${WORDPRESS_ADMIN_EMAIL} \
 					--skip-email
 
-echo "admin user created with password: ${WORDPRESS_ADMIN_PASSWORD} and email: ${WORDPRESS_ADMIN_EMAIL}"
-
 /usr/local/bin/wp	user create \
 					--allow-root \
 					--path="/var/www/html" \
@@ -31,8 +29,6 @@ echo "admin user created with password: ${WORDPRESS_ADMIN_PASSWORD} and email: $
 					${WORDPRESS_EMAIL} \
 					--role=author \
 					--user_pass=${WORDPRESS_PASSWORD}
-
-echo "user created with password: ${WORDPRESS_PASSWORD} and email: ${WORDPRESS_EMAIL}"
 
 exec php-fpm81 -F
 
