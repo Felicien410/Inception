@@ -22,6 +22,8 @@ cp					./wp-config.php /var/www/html/wp-config.php
 					--admin_email=${WORDPRESS_ADMIN_EMAIL} \
 					--skip-email
 
+echo "admin user created with password: ${WORDPRESS_ADMIN_PASSWORD} and email: ${WORDPRESS_ADMIN_EMAIL}"
+
 /usr/local/bin/wp	user create \
 					--allow-root \
 					--path="/var/www/html" \
@@ -30,4 +32,7 @@ cp					./wp-config.php /var/www/html/wp-config.php
 					--role=author \
 					--user_pass=${WORDPRESS_PASSWORD}
 
-exec	php-fpm7 -F
+echo "user created with password: ${WORDPRESS_PASSWORD} and email: ${WORDPRESS_EMAIL}"
+
+exec php-fpm81 -F
+

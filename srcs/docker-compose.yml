@@ -19,7 +19,6 @@ services:
     environment:
       - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
     
-      
   nginx:
     build:
       context: ./requirements/nginx
