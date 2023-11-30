@@ -59,13 +59,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/feliciencatteau/data/wordpress
+      device: /home/fcatteau/data/wordpress
   db_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/feliciencatteau/data/mariadb
+      device: /home/fcatteau/data/mariadb
 
 networks:
   my_network:

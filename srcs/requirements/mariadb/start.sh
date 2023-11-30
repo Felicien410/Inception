@@ -1,7 +1,6 @@
 #!/bin/sh
 
-mkdir -p /Users/feliciencatteau/data/wordpress
-mkdir -p /Users/feliciencatteau/data/mariadb
+
 
 if [ ! -d "/run/mysqld" ]; then
 	mkdir -p /run/mysqld

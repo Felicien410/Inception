@@ -9,11 +9,12 @@ RESET = \033[0m
 
 COMPOSE_FILE = ./srcs/docker-compose.yml
 
-all: build up
+all: build
 
 build:
-	@echo "$(BLUE)██████████████████████ Building Images ███████████████████████$(RESET)"
-	docker-compose -f $(COMPOSE_FILE) build
+	sudo mkdir -p /home/fcatteau/data/wordpress
+	sudo mkdir -p /home/fcatteau/data/mariadb
+	sudo docker compose -f $(COMPOSE_FILE) up --build -d
 
 up:
 	@echo "$(GREEN)██████████████████████ Running Containers ██████████████████████$(RESET)"
