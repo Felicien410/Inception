@@ -54,11 +54,13 @@ rmi:
 
 clean:
 	@echo "$(RED)█████████████████████ Removing Containers ██████████████████████$(RESET)"
-	docker-compose -f $(COMPOSE_FILE) down --volumes --remove-orphans
+	docker compose -f $(COMPOSE_FILE) down --volumes --remove-orphans
 
 fclean:
 	@echo "$(RED)█████████████████████ Removing Everything ██████████████████████$(RESET)"
-	@docker-compose -f srcs/docker-compose.yml down || echo "Docker Compose n'a pas pu arrêter les conteneurs. Peut-être n'existent-ils pas ou sont-ils déjà arrêtés."
+	@docker compose -f $(COMPOSE_FILE) down
+	@docker compose -f $(COMPOSE_FILE) stop
+	@docker compose -f $(COMPOSE_FILE) down -v
 	@docker system prune -a --volumes
 
 re: fclean all
@@ -67,4 +69,10 @@ re: fclean all
 
 sql-shell:
 	@echo "Accès au shell MySQL..."
-	docker-compose -f $(COMPOSE_FILE) exec mariadb mysql -u root
+	docker compose -f $(COMPOSE_FILE) exec mariadb mysql -u root
+
+delvolumes:
+	sudo rm -rf /home/fcatteau/data/wordpress/*
+	sudo rm -rf /home/fcatteau/data/mariadb/*
+
+
