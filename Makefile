@@ -18,26 +18,26 @@ build:
 
 up:
 	@echo "$(GREEN)██████████████████████ Running Containers ██████████████████████$(RESET)"
-	@docker-compose -f $(COMPOSE_FILE) up -d
+	@docker compose -f $(COMPOSE_FILE) up -d
 	@echo "$(RED)╔════════════════════════════║NOTE:║════════════════════════╗$(RESET)"
 	@echo "$(RED)║   $(BLUE) You can see The Containers logs using $(YELLOW)make logs        $(RED)║$(RESET)"
 	@echo "$(RED)╚═══════════════════════════════════════════════════════════╝$(RESET)"
 
 down:
 	@echo "$(RED)██████████████████ Removing All Containers ██████████████████$(RESET)"
-	docker-compose -f $(COMPOSE_FILE) down
+	docker compose -f $(COMPOSE_FILE) down
 
 start:
 	@echo "$(RED)████████████████████ Starting Containers █████████████████████$(RESET)"
-	docker-compose -f $(COMPOSE_FILE) start
+	docker compose -f $(COMPOSE_FILE) start
 
 stop:
 	@echo "$(RED)████████████████████ Stoping Containers █████████████████████$(RESET)"
-	docker-compose -f $(COMPOSE_FILE) stop
+	docker compose -f $(COMPOSE_FILE) stop
 
 logs:
 	@echo "$(GREEN)██████████████████████ Running Containers ██████████████████████$(RESET)"
-	docker-compose -f $(COMPOSE_FILE) logs
+	docker compose -f $(COMPOSE_FILE) logs
 	
 status:
 	@echo "$(GREEN)██████████████████████ The Running Containers ██████████████████████$(RESET)"
